@@ -1,0 +1,3 @@
+[submodule "futurity-frontend"]
+	path = futurity-frontend
+	url = https://github.com/ThePersonThat/futurity-frontend
