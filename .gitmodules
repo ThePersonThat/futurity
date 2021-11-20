@@ -1,4 +1,6 @@
 [submodule "futurity-frontend"]
 	path = futurity-frontend
 	url = https://github.com/ThePersonThat/futurity-frontend
-	branch = master
+[submodule "futurity-backend"]
+	path = futurity-backend
+	url = https://github.com/ThePersonThat/futurity-backend
