@@ -1,0 +1,59 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    restart: always
+    volumes:
+      - "./futurity:/var/lib/postgresql/data"
+    env_file:
+      - prod.env
+  nginx:
+    build:
+      context: ./futurity-frontend/
+    container_name: nginx
+    ports:
+      - "80:80"
+    env_file:
+      - prod.env
+  user-service:
+    build:
+      context: ./futurity-backend/user-server/
+    container_name: user-service
+    depends_on:
+      - postgres
+      - nginx
+    env_file:
+      - prod.env
+  project-service:
+    build:
+      context: ./futurity-backend/project-server/
+    container_name: project-server
+    depends_on:
+      - postgres
+      - nginx
+    env_file:
+      - prod.env
+  auth-service:
+    build:
+      context: ./futurity-backend/authorization-server/
+    container_name: auth-service
+    depends_on:
+      - postgres
+      - nginx
+    env_file:
+      - prod.env
+  api-gateway:
+    build:
+      context: ./futurity-backend/api-gateway/
+    container_name: api-gateway
+    depends_on:
+      - postgres
+      - nginx
+    env_file:
+      - prod.env
+
+networks:
+  default:
+    name: futurity
