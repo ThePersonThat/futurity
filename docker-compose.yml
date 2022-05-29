@@ -13,6 +13,8 @@ services:
     build:
       context: ./futurity-frontend/
     container_name: nginx
+    depends_on:
+      - api-gateway
     ports:
       - "80:80"
     env_file:
@@ -23,7 +25,6 @@ services:
     container_name: user-service
     depends_on:
       - postgres
-      - nginx
     volumes:
       - "./maven-rep:/root/.m2"
     env_file:
@@ -34,7 +35,6 @@ services:
     container_name: project-server
     depends_on:
       - postgres
-      - nginx
     volumes:
       - "./maven-rep:/root/.m2"
     env_file:
@@ -45,7 +45,6 @@ services:
     container_name: auth-service
     depends_on:
       - postgres
-      - nginx
     volumes:
       - "./maven-rep:/root/.m2"
     env_file:
@@ -56,7 +55,6 @@ services:
     container_name: api-gateway
     depends_on:
       - postgres
-      - nginx
     volumes:
       - "./maven-rep:/root/.m2"
     env_file:
