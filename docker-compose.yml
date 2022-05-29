@@ -13,10 +13,14 @@ services:
     build:
       context: ./futurity-frontend/
     container_name: nginx
-    depends_on:
-      - api-gateway
     ports:
       - "80:80"
+      - "443:443"
+    volumes:
+      - "./certbot/www:/var/www/certbot/"
+      - "./certbot/conf/:/etc/nginx/ssl/"
+    depends_on:
+      - api-gateway
     env_file:
       - prod.env
   user-service:
@@ -59,6 +63,13 @@ services:
       - "./maven-rep:/root/.m2"
     env_file:
       - prod.env
+  # enable this when you need to generate new certificate:
+  # docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d example.org
+  # certbot:
+  #  image: certbot/certbot
+  #  volumes:
+  #    - ./certbot/www/:/var/www/certbot/
+  #    - ./certbot/conf/:/etc/letsencrypt/
 
 networks:
   default:
